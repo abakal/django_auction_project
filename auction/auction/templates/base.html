@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{% block title %}Auction{% endblock %}</title>
+    {% block head %}
+    {% endblock head %}
+  </head>
+  <body>
+    {% block body %}
+      <header>
+              <a class="navbar-brand" href="{% url 'home' %}">Auction</a>
+            {% if user.is_authenticated %}
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="{% url 'settings' %}">{{ user.user_profile.get_non_private_screen_name }}</a></li>
+                    <li><a href="{% url 'logout' %}">Log out</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                  <li><a href="{% url 'lots' %}">Explore</a></li>
+                </ul>
+                      
+            
+            {% endif %}
+      </header>
+      <main>
+        <div class="container">
+          {% block main %}
+          
+          {% endblock main %}
+        </div>
+      </main>
+    {% endblock body %}
+  </body>
+</html>

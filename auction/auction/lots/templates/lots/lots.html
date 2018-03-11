@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %} lots {% endblock %}
+
+{% block head %}
+{% endblock head %}
+
+{% block main %}
+  
+      <hr>
+      <h3>Lots</h3> 
+        {% for user in users %}
+            <img class="round-user" src="{{ user.profile.get_picture }}" style="width:20px;">
+            <a href="{% url 'public_profile' user.id %}">{{ user.profile.get_private_screen_name }}</a>
+        {% endfor %}
+      <h3>Recent Lots</h3>
+      <hr>
+      <section class=" lots">
+        {% for lot in lots %}
+            <a href="{% url 'lot' lot.slug %}">{{ lot.title }}</a>
+        {% empty %}
+            <h3>there aren't any open lots</h3> 
+        {% endfor %}
+      </section>
+      {% include 'paginator.html' with paginator=lots %}
+{% endblock main %}
