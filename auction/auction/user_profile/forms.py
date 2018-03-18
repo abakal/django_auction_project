@@ -2,6 +2,29 @@ from django import forms
 from django.contrib.auth.models import User
 from django.utils.translation import gettext as _
 
+
+
+class ProfileForm(forms.ModelForm):
+    firstname=forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}),
+                              max_length=30,
+                              required=True)
+    email=forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}),
+                          max_length=75,
+                          required=False)
+    class Meta:
+        model=User
+        fields=['firstname','email']
+        
+    def full_clean(self):
+        'Strip whitespace automatically in all form fields'
+        data = self.data.copy()
+        for k, vs in self.data.items():
+            new_vs = []
+            new_vs.append(vs.strip())
+            data.setlist(k, new_vs)
+        self.data = data
+        super(ProfileForm, self).full_clean()
+
 class SignUpForm(forms.ModelForm):
     firstname=forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}),
                                max_length=30,
