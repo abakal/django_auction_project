@@ -5,21 +5,45 @@
 {% endblock head %}
 
 {% block main %}
+  <hr>
+  <h3>Recent Lots</h3>
+  <hr>
+  <form action="" method="get" role="form">
+  <a href="{% url 'lots' %}?orderby=-title">Descending order</a>
+  <a href="{% url 'lots' %}?orderby=-title">Ascending order</a>
+  </form>
+  <div class="col-md-8">
+  <section class=" lots">
   
-      <hr>
-      <h3>Lots</h3> 
-        {% for user in users %}
-            <img class="round-user" src="{{ user.profile.get_picture }}" style="width:20px;">
-            <a href="{% url 'public_profile' user.id %}">{{ user.profile.get_private_screen_name }}</a>
-        {% endfor %}
-      <h3>Recent Lots</h3>
-      <hr>
-      <section class=" lots">
-        {% for lot in lots %}
-            <a href="{% url 'lot' lot.slug %}">{{ lot.title }}</a>
-        {% empty %}
-            <h3>there aren't any open lots</h3> 
-        {% endfor %}
-      </section>
-      {% include 'paginator.html' with paginator=lots %}
+  
+{% for lot in lots %}
+<tr> <a href="{% url 'lot' lot.slug %}">{{ lot.title }}</a></tr>
+{% empty %}
+<h3>there aren't any open lots</h3> 
+{% endfor %}
+  </section>
+  
+  <ul class="pagination">
+  {% if page_obj.has_previous %}
+<li><a href="?page={{ page_obj.previous_page_number }}&ordering={{current_order}}">&laquo;</a></li>
+  {% else %}
+<li class="disabled"><span>&laquo;</span></li>
+  {% endif %}
+  {% for i in page_obj.paginator.page_range %}
+{% if page_obj.number == i %}
+  <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+{% else %}
+  <li><a href="?page={{ i }}&ordering={{current_order}}">{{ i }}</a></li>
+{% endif %}
+  {% endfor %}
+  {% if page_obj.has_next %}
+<li><a href="?page={{ page_obj.next_page_number }}&ordering={{current_order}}">&raquo;</a></li>
+  {% else %}
+<li class="disabled"><span>&raquo;</span></li>
+  {% endif %}
+</ul>
+</div>      
+  
+  
+
 {% endblock main %}

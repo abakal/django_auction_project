@@ -8,11 +8,15 @@ from auction.user_profile.views import SignUpView,Settings,Profile
 from auction.core.views import HomeView
 from django.contrib.auth.decorators import login_required
 
+from django_filters.views import FilterView
+from auction.lots.views import LotListView,LotDetailView
+from auction.lots.filters import LotFilter
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     re_path(r'^$', HomeView.as_view(), name='home'),
     re_path(r'^settings/$', login_required(Settings.as_view()), name='settings'),
+    #re_path(r'^search/$', FilterView.as_view(filterset_class=LotFilter,	template_name='lots/search.html'),name='filter'),
     re_path(r'^settings/profile/$', login_required(Profile.as_view()), name='profile'),
     re_path(r'^settings/picture/$', picture, name='upload_picture'),
     re_path(r'^settings/picture/save_uploaded_picture/$',save_uploaded_picture, name='save_uploaded_picture'),

@@ -24,7 +24,7 @@ class Lot(models.Model):
     status=models.CharField(max_length=2,choices=STATUS,default=OPEN)
     winner=models.ForeignKey(User,on_delete=models.CASCADE)
     slug=models.SlugField(max_length=255,null=True,blank=True)
-      
+    
     class Meta:
         db_table='"lots"'
         verbose_name=_(u'Lot')
@@ -33,10 +33,10 @@ class Lot(models.Model):
     def __unicode__(self):
         return self.title
     @staticmethod
-    def get_published():
+    def get_opened():
         lots = Lot.objects.filter(status=Lot.OPEN)
         return lots
-        
+     
     
 class Bet(models.Model):
     bet_user=models.ForeignKey(User,on_delete=models.CASCADE)

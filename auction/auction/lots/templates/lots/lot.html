@@ -1,12 +1,23 @@
 {% extends 'base.html' %}
-{% block title %}{{ lot.title }}{% endblock %}
+{% load humanize %}
 
 {% block head %}
 {% endblock head %}
 
-
+{% block title %}{{ lot.title }}{% endblock %}
+{}
 {% block main %}
-
-{{lot.title}}
-{{lot.winner}}
+<div class="page-header">
+<div class="row">
+  <div class="cover col-md-10">
+      <div class=" lots">
+        {{lot.title}}
+        {{lot.status}}
+        {{lot.description}}
+        {{lot.winner}}
+      </div>
+      
+   </div>
+</div>
+</div>    
 {% endblock main %}
